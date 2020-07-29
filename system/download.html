@@ -1,0 +1,18 @@
+<!--
+  ~ &copy; 2020 - Pocket Inc.
+  -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Download Manager</title>
+</head>
+<body>
+<script>
+    require("electron").remote.session.defaultSession.on("will-download",function (event,item,contents) {
+    if(item.getState() === "completed") alert("Done.");
+    })
+</script>
+</body>
+</html>

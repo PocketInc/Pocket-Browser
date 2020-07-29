@@ -1,7 +1,7 @@
 <html>
 <head>
     <script>
-        window.jQuery = window.$ = require('../external/jquery.js');
+        window.jQuery = window.$ = require('../../external/jquery.js');
     </script>
     <style>
         body {
@@ -29,18 +29,18 @@
     <title>Error - Pocket Browser</title>
 </head>
 <body>
-<h2 style="text-align: center;color: deepskyblue"><u>Error Occured!</u></h2>
-<p style="text-align: center;">Contact Support.</p>
-<p style="text-align: center"><small>Error Code: <b style='color:red'>PB_UNKNOWN_ERR</b></small></p>
+<h2 style="text-align: center;color: deepskyblue"><u>SSL Protocol Error.</u></h2>
+<p style="text-align: center;">Website certificate is not vaild.</p>
+<p style="text-align: center"><small>Error Code: <b style='color:red'>PB_SSL_ERROR</b></small></p>
 <hr style="border-color: deepskyblue;width:50%">
 <p style="text-align: center"><button onclick="toggleHelp()">Fix</button></p>
 <div id="help">
     <ul style="text-align: center;list-style-position: inside;">
-        <li>Check your internet connection.</li>
+        <li>Try again at a later time.</li>
         <br>
-        <li>Recheck the address spelling.</li>
+        <li>Load website via "http" instead of "https".</li>
         <br>
-        <li>Contact Support at pocket-inc.ml/support.</li>
+        <li>Contact website administrator.</li>
     </ul>
 </div>
 <script>

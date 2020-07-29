@@ -1,0 +1,89 @@
+/*
+ * © 2020 - Pocket Inc.
+ */
+
+body {
+    background-color: lightskyblue;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+img {
+    border-radius: 50%;
+    border: 1px solid black;
+    animation: rainbow 2s infinite;
+    width: 80%;
+    height: 20%;
+}
+@keyframes rainbow {
+    0%{
+        background-color: red;
+    }
+    25%{
+        background-color: lightgreen;
+    }
+    50%{
+        background-color: blue;
+    }
+    75%{
+        background-color: yellow;
+    }
+    100%{
+        background-color: red;
+    }
+}
+#nav {
+    height: 100%;
+    width: 15%;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: darkslategrey;
+    overflow-x: hidden;
+}
+#body {
+    margin-left: 15%;
+}
+nav button {
+    width: 100%;
+    height: 10%;
+    background-color: lightskyblue;
+    transition-duration: 0.4s;
+    color: darkslategrey;
+    border: 1px solid black;
+    border-radius: 10px
+}
+
+
+nav button:hover {
+    background-color: darkslategrey; /* Green */
+    color: lightskyblue;
+    border-color: lightskyblue;
+}
+
+.x {
+    background-color: red;
+    transition-duration: 0.4s;
+    color: darkslategrey;
+    border: 1px solid black;
+    border-radius: 25px;
+}
+.x:hover {
+    background-color: darkred; /* Green */
+    color: lightskyblue;
+    border-color: lightskyblue;
+}
+button {
+    background-color: lightskyblue;
+    transition-duration: 0.7s;
+    color: darkslategrey;
+    border: 2px solid black;
+    height: 8%;
+}
+button:hover {
+    background-color: darkslategrey; /* Green */
+    color: lightskyblue;
+    border-color: darkslategrey;
+}
+.container {
+    padding-left: 20%;
+}

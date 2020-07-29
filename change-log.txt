@@ -1,3 +1,26 @@
+V1.5:
+
+- Added secure shield.
+- Added Site Perm Settings.
+- Added Cookies list.
+- Added History.
+- Added Address auto complete.
+- Address no longer accept enter clicks unless it's auto complete.
+- Added Support for dragging link to address bar.
+- Added Error Pages.
+- Added Find in Page.
+- Added Zoom.
+- Added custom notifications.
+- Fix: When a setting is changed, it's shown live.
+- Fix: Error when no perms set in website.
+- Fix: Remade the log system.
+- Fix: When title is big, tab name will be smaller. but hovering on it will show full title.
+- Fix: Disabled icons drag ability.
+- Organized the code, and moved scripts and files to folders.
+- More Bug Fixes.
+
+More stuff in http://github.com/PocketInc/Pocket-Browser/issues/1
+
 V1.4:
 
 - Changed background of tool bar.

@@ -1,87 +1,16 @@
 <html>
     <head>
         <title>Search Engine - Settings</title>
-        <style>
-            body {
-                background-color: lightskyblue;
-                font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
-            }
-            img {
-                border-radius: 50%;
-                border: 1px solid black;
-                animation: rainbow 2s infinite;
-                width: 80%;
-                height: 20%;
-            }
-            @keyframes rainbow {
-                0%{
-                    background-color: red;
-                }
-                25%{
-                    background-color: lightgreen;
-                }
-                50%{
-                    background-color: blue;
-                }
-                75%{
-                    background-color: yellow;
-                }
-                100%{
-                    background-color: red;
-                }
-            }
-            #nav {
-  height: 100%;
-  width: 15%;
-  position: fixed;
-  z-index: 1;
-  top: 0;
-  left: 0;
-  background-color: darkslategrey;
-  overflow-x: hidden;
-  padding-top: 20px;
-            }
-            #body {
-                margin-left: 15%;
-            }
-            nav button {
-                width: 100%;
-                height: 10%;
-                background-color: lightskyblue;
-                transition-duration: 0.4s;
-                color: darkslategrey;
-                border: 1px solid black;
-                border-radius: 10px
-                }
-
-
-nav button:hover {
-  background-color: darkslategrey; /* Green */
-  color: lightskyblue;
-    border-color: lightskyblue;
-}
-
-        </style>
+ <link rel="stylesheet" href="src/style.css">
     </head>
     <body onload="getSettings()">
-        <nav id="nav">
-            <img src="../s-icon.png">
-            <hr style="border-color: black;width: 25%">
-        <a href="settings.html"><button><b>Search</b></button></a>
-        <br>
-        <a href="home.html"><button>Home Page</button></a>
-        <br>
-        <button>Downloads</button>
-        <br>
-        <button>Notifications</button>
-        <br>
-        <a href="about-settings.html"><button>About</button></a>
-        </nav>
         <div id="body">
-
+            <nav id="nav"></nav>
         <h3>Search Engine:</h3>
-        <p><input style="width: 50%" id="engine" placeholder="http://example.com/%s"><button onclick="changeSearchEngine()">Change</button></p>
-        <h6 style="text-align: center;">Write <u>%s</u> instead of query</h6>
+
+        <p><input style="width: 50%" id="engine" placeholder="http://example.com/%s"></p>
+            <button onclick="changeSearchEngine()">Change</button>
+        <h6 style="text-align: center;">Write <u>%s</u> instead of SearchTerm</h6>
         <hr style="width:25%">
         <p id="currentEngine">Current Engine: </p>
 

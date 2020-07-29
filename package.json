@@ -1,27 +1,31 @@
 {
   "name": "pocket-browser",
   "productName": "Pocket Browser",
-  "version": "1.4.0",
+  "version": "1.5.0",
   "description": "An open-sourced browser",
   "main": "main.js",
   "dependencies": {
-    "electron": "^9.0.5",
+    "autocompleter": "^6.0.3",
     "bootstrap-icons": "^1.0.0-alpha5",
-    "dialog": "^0.3.1",
+    "electron": "^9.0.5",
     "electron-context-menu": "^2.1.0",
     "electron-log": "^4.2.2",
     "electron-packager": "^15.0.0",
     "electron-tabs": "^0.15.0",
     "fs": "0.0.1-security",
-    "jquery": "^3.5.1",
+    "line-by-line": "^0.1.6",
     "remote": "^0.2.6"
   },
   "devDependencies": {
     "electron": "^9.0.5"
   },
   "scripts": {
-    "start": "electron ."
+    "start": "electron .",
+    "build": "electron-packager ./ --app-copyright Pocket,Inc. --icon ./icon.ico --overwrite"
   },
   "author": "Pocket, Inc.",
+  "repository": {
+    "url": "https://github.com/PocketInc/Pocket-Browser"
+  },
   "license": "MIT"
 }

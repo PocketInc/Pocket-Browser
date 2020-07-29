@@ -1,0 +1,51 @@
+<!--
+  ~ © 2020 - Pocket Inc.
+  -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        button {
+            background-color: lightskyblue;
+            transition-duration: 0.4s;
+            color: darkslategrey;
+            border: 2px solid black;
+            padding: 15px 5px 15px 5px;
+        }
+
+
+        button:hover {
+            background-color: darkslategrey; /* Green */
+            color: lightskyblue;
+            border-color: darkslategray;
+        }
+    </style>
+    <title>Log - Pocket Browser</title>
+</head>
+<body bgcolor="lightskyblue">
+<h2 style="font-family: 'Comic Sans MS'"><u>Browser Log:</u></h2>
+<button onclick="resetLog()">Reset Log</button>
+<br>
+<p id="info"></p>
+
+<script>
+    var logPath = require("electron").remote.app.getPath("logs") + "/browser.log";
+    document.getElementById("info").innerHTML = "Path: " + logPath + "<br><br>";
+
+    const lbl = require("line-by-line");
+    const logReader = new lbl(logPath)
+    logReader.on("line",function (line) {
+        document.getElementById("info").innerHTML += line + "<br>";
+        console.log("new line.")
+    })
+    function resetLog() {
+require("fs").writeFile(logPath,"",function (err) {
+if (err) console.log(err);
+
+})
+    }
+</script>
+</body>
+</html>
