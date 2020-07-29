@@ -1,6 +1,6 @@
-<h3><img src="s-icon.png"> Pocket Browser</h3>
+<h3><img src="style/s-icon.png"> Pocket Browser</h3>
 
-<h6>The browser that'll make your browsing more secure.</h6>
+<h6>Made for privacy, going towards security.</h6>
 <hr width="25%">
 <p>Annoyed from getting tracked while browsing the web?</p>
 <p>Download <a href="http://github.com/PocketInc/Pocket-Browser/releases">Pocket Browser</a> and stop all tracking activities</p>
