@@ -2,3 +2,4 @@ Bootstrap.css + Bootstrap.js > Bootstrap Team. (getbootstrap.com)
 Popper.js > Popper Team. (popper.js.org)
 JQuery.js > Jquery Foundation. (jquery.com)
 Loading.gif > Found on Google Images.
+electron-tabs.css > electron-tabs repo modified stylesheet
