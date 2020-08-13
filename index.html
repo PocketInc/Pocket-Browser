@@ -27,6 +27,8 @@
  <script src="external/bootstrap.js"></script>
  <link rel="stylesheet" href="external/bootstrap.css">
 <link rel="stylesheet" href="node_modules/autocompleter/autocomplete.css">
+        <link rel="stylesheet" href="node_modules/dist/dragula.css">
+
         <title>Pocket Browser</title>
     </head>
     <body>
@@ -93,7 +95,15 @@
         <script>
             //create tab group and add a tab.
             const TabGroup = require("electron-tabs");
-    let tabGroup = new TabGroup();
+            const dragula = require("dragula");
+
+            let tabGroup = new TabGroup({
+                ready: function (tabGroup) {
+                    dragula([tabGroup.tabContainer], {
+                        direction: "horizontal"
+                    });
+                }
+            });
     //TAB
             let mainTab = tabGroup.addTab({
                 title: "New Tab",
@@ -115,7 +125,7 @@
 goHome();
 
 // add events to tab.
-    addEventsToTab(mainTab, true)
+    addEventsToTab(mainTab)
 </script>
 
 

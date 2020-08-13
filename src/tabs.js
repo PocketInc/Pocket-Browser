@@ -15,7 +15,7 @@ function addTab(page) {
   });
   //if page is provided, load it.
   if (page) {
-    tab.webview.loadURL(page);
+    tab.webview.src = page;
   }
   //add events from events.js
   addEventsToTab(tab)

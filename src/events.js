@@ -3,10 +3,7 @@ const contextMenu = require('electron-context-menu'); //require context menu mod
 
 //Function to easily add and modify tab events.
 
-function addEventsToTab(targetTab,home) {
-    if (home !== true) {
-        targetTab.webview.src = homePage;
-    }
+function addEventsToTab(targetTab) {
 
     targetTab.webview.addEventListener("dom-ready",function () {
         //USER AGENT:
@@ -97,9 +94,13 @@ document.getElementById("findResults").innerHTML = event.result.matches;
 
     })
 
-    targetTab.webview.addEventListener("did-navigate",function (event) {
+    targetTab.webview.addEventListener("will-navigate",function (event) {
     changeAddress(targetTab,event);
     })
+    targetTab.webview.addEventListener("did-navigate-in-page",function (event) {
+        changeAddress(targetTab,event);
+    })
+
 }
 //Other Events
 
@@ -129,6 +130,9 @@ document.getElementById("address").addEventListener('drop',function (event) {
 event.preventDefault();
     document.getElementById('address').value = event.dataTransfer.getData("Text")
 })
+document.getElementById("tabgroup").addEventListener('drop',function (event) {
+alert()
+})
 
 //select all text in address bar when clicked on it.
 document.getElementById("address").addEventListener("click",function () {
@@ -148,6 +152,7 @@ tabGroup.on("tab-active", (tab, tabGroup) => {
     } else {
         changeSecureState("")
     }
+
 });
 //KeyBoard Shortcuts
 
@@ -166,6 +171,7 @@ window.addEventListener("keypress",function (event) {
         }
     }
 })
+
 
 //auto-complete compatibility
 

@@ -31,7 +31,6 @@ function createWindow () {
 
   const newAgent = mainWindow.webContents.getUserAgent().replace(" Electron/" + process.versions['electron'],"")
   mainWindow.webContents.setUserAgent(newAgent)
-
   }
 
 // This method will be called when Electron has finished
