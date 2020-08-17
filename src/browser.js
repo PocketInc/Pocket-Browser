@@ -61,7 +61,6 @@ function goHome() {
         }
         homePage=data;
         getTab.webview.loadURL(data);
-        pocket.info("Loading successfull")
 
     });
 }
@@ -79,7 +78,7 @@ function reloadPage() {
 function changeFavicon(event,tab) {
     //try, if catched error log it.
     try {
-        pocket.info("Favicon changed")
+        pocket.info("Changing Favicon")
         //event.favicons[0] = the favicon url taken from event.
         tab.setIcon(event.favicons[0])
     } catch(err) {
@@ -91,7 +90,7 @@ function changeFavicon(event,tab) {
 function changeTitle(target,event) {
 //try, if catched error, log it.
     try {
-        pocket.info("Title changed.")
+        pocket.info("Changing Title.")
 
         //if the title is empty, then do nothing.
         //if title is longer than 30 chars, then cut only 30 chars from it and set them as title.
@@ -238,24 +237,27 @@ function changeAddress(target,event) {
         if (event.url) {
             if (event.url.slice(0,8) === "https://") {
                 var protocol = "https";
+                pocket.info("Changed Address, HTTPS Protocol.")
             } else if (event.url.slice(0, 7) === "http://") {
-
+                pocket.info("Changed Address, HTTP Protocol.")
                 betaNotify("In-Secure Webpage!","Don't write any personal information.")
-                pocket.info("Sent notification due to insecure page.")
             var protocol = "http"
             } else {
                 var protocol = "";
+                pocket.info("Changed Address, Unknown Protocol.")
             }
             checkPerms(target,event)
             showCookies(event);
             checkHistory(event.url)
+            target.setIcon("");
 
-            pocket.info("Changing address. normal URL.")
             if (tabGroup.getActiveTab() === target) {
-                if (document.getElementById("address").value != event.url) {
+                pocket.info("Target tab is active.");
+                changeSecureState(protocol)
+                    if ($("#address").is(":focus")) return;
                     document.getElementById("address").value = event.url;
-                    changeSecureState(protocol)
-                }
+
+
             }
         }
 
@@ -272,37 +274,49 @@ function changeState(target) {
     }
 
 }
+function resetState(target) {
+if (!target.webview.isLoadingMainFrame()) {
+    pocket.info("Resetting reloading state to: false by function");
+    target.setIcon("");
+}
+}
 
 function changeSecureState(state) {
-    if (state) {
-        document.getElementById("shieldButton").hidden = false;
-        if (state === "https") {
-            document.getElementById("shield").src = "./node_modules/bootstrap-icons/icons/shield-check.svg"
-            document.getElementById("shield").title = "Secure";
-            document.getElementById("secureText").innerHTML = "Secure connection via <b>HTTPS</b>";
-            document.getElementById("secureText").style.color = "darkgreen";
-        } else if (state === "http") {
-            document.getElementById("shield").src = "./node_modules/bootstrap-icons/icons/shield-exclamation.svg"
-            document.getElementById("shield").title = "In-Secure";
-            document.getElementById("secureText").innerHTML = "In-secure connection via <b>HTTP</b>";
-            document.getElementById("secureText").style.color = "red";
+    try {
 
+        if (state) {
+            pocket.info("Changing Secure state to " + state);
+            document.getElementById("shieldButton").hidden = false;
+            if (state === "https") {
+                document.getElementById("shield").src = "./node_modules/bootstrap-icons/icons/shield-check.svg"
+                document.getElementById("shield").title = "Secure";
+                document.getElementById("secureText").innerHTML = "Secure connection via <b>HTTPS</b>";
+                document.getElementById("secureText").style.color = "darkgreen";
+            } else if (state === "http") {
+                document.getElementById("shield").src = "./node_modules/bootstrap-icons/icons/shield-exclamation.svg"
+                document.getElementById("shield").title = "In-Secure";
+                document.getElementById("secureText").innerHTML = "In-secure connection via <b>HTTP</b>";
+                document.getElementById("secureText").style.color = "red";
+
+            } else {
+                document.getElementById("secureText").innerHTML = "";
+
+                document.getElementById("shieldButton").hidden = true;
+                document.getElementById("shield").title = "";
+            }
         } else {
             document.getElementById("secureText").innerHTML = "";
 
             document.getElementById("shieldButton").hidden = true;
             document.getElementById("shield").title = "";
         }
-    } else {
-        document.getElementById("secureText").innerHTML = "";
 
-        document.getElementById("shieldButton").hidden = true;
-        document.getElementById("shield").title = "";
+    } catch(err) {
+        pocket.error("IMP! Couldn't change secure state");
     }
 }
 
 function changeSitePerms(perm) {
-    const dialog = require("dialog");
 var getTab = tabGroup.getActiveTab();
 if (perm === 0) {
     //notifications
@@ -312,6 +326,8 @@ if (perm === 0) {
         var start = getTab.webview.src.slice(8);
     } else if (getTab.webview.src.slice(0,7) === "http://") {
         var start = getTab.webview.src.slice(7);
+    } else {
+        var start = getTab.webview.src;
     }
     if (start.slice(0,4) === "www.") {
         start = start.slice(4)
@@ -350,6 +366,8 @@ function checkPerms(target,event) {
         var start = event.url.slice(8);
     } else if (event.url.slice(0, 7) === "http://") {
         var start = event.url.slice(7);
+    } else {
+        var start = event.url;
     }
     if (start.slice(0, 4) === "www.") {
         start = start.slice(4)
@@ -432,4 +450,44 @@ function getHistory() {
         }
         size++;
     })
+}
+
+function findInPage() {
+    document.getElementById("toasts").innerHTML = "<div id=\"findinpage\" class=\"toast\" role=\"alert\" aria-live=\"assertive\" aria-atomic=\"true\" data-autohide=\"false\">\n" +
+        "            <div class=\"toast-header\">\n" +
+        "                <img src=\"system/favicon.ico\" class=\"rounded mr-2\" alt=\"Pb\" width=\"25\" height=\"25\">\n" +
+        "                <strong class=\"mr-auto\" id=\"findTitle\">Find in Page:</strong>\n" +
+        "                <small id='findResults'></small>\n" +
+        "                <button type=\"button\" class=\"ml-2 mb-1 close\" data-dismiss=\"toast\" aria-label=\"Close\">\n" +
+        "                    <span aria-hidden=\"true\">&times;</span>\n" +
+        "                </button>\n" +
+        "            </div>\n" +
+        "            <div class=\"toast-body bg-light\" id=\"findBody\">\n" +
+        "\n<input id='textFind'>\n<button class='btn btn-light' onclick='find()'>Find</button>" +
+        "            </div>\n" +
+        "        </div>\n" + document.getElementById("toasts").innerHTML;
+
+    $("#findinpage").toast("show");
+    $("#findinpage").show();
+
+    $("#findinpage").on("hidden.bs.toast", function () {
+        for (var i = 0;i<tabGroup.getTabs().length;i++) {
+            tabGroup.getTabs()[i].webview.stopFindInPage("clearSelection");
+        }
+    })
+}
+function find() {
+    var text = document.getElementById("textFind").value;
+
+    tabGroup.getActiveTab().webview.findInPage(text)
+}
+function zoom(type) {
+    if (type == "add") {
+        var newZoom = tabGroup.getActiveTab().webview.getZoomLevel() + 0.5;
+        tabGroup.getActiveTab().webview.setZoomLevel(newZoom)
+    } else if (type == "minus") {
+        var newZoom = tabGroup.getActiveTab().webview.getZoomLevel() - 0.5;
+        tabGroup.getActiveTab().webview.setZoomLevel(newZoom)
+    }
+    betaNotify("Pocket Browser","Zoom Level: " + tabGroup.getActiveTab().webview.getZoomLevel())
 }

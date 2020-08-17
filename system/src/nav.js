@@ -10,6 +10,6 @@ document.getElementById("nav").innerHTML = '<p style="text-align: center"><img s
     '        <br>\n' +
     '        <button>Downloads</button>\n' +
     '        <br>\n' +
-    '        <a href="theme.html"><button>Theme</button></a>\n' +
+    '        <a href="extensions.html"><button>Extensions</button></a>\n' +
     '        <br>\n' +
     '        <a href="about-settings.html"><button>About</button></a>\n'

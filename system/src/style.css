@@ -11,7 +11,7 @@ img {
     border: 1px solid black;
     animation: rainbow 2s infinite;
     width: 80%;
-    height: 20%;
+    height: 18%;
 }
 @keyframes rainbow {
     0%{

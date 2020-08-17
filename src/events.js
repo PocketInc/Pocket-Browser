@@ -4,53 +4,87 @@ const contextMenu = require('electron-context-menu'); //require context menu mod
 //Function to easily add and modify tab events.
 
 function addEventsToTab(targetTab) {
+    const domready = emittedOnce(targetTab.webview,"dom-ready");
+    Promise.all([domready]).then(() => {
 
-    targetTab.webview.addEventListener("dom-ready",function () {
+
         //USER AGENT:
         // change useragent to Pb's official user agent.
         var newAgent = targetTab.webview.getUserAgent().replace(" Electron/" + process.versions['electron'],"").replace("PocketBrowser/1.5.0","Edg/84.0.522.44")
 
         targetTab.webview.setUserAgent(newAgent)
 
-    contextMenu({
-        window: targetTab.webview,
-        showCopyImageAddress: true,
-        showSaveImage: true,
-        showSearchWithGoogle: false,
-        showInspectElement: true,
-        prepend: (defaultActions, params, browserWindow) => [
-            {
-                label: 'Open link in new tab',
-                // Only show it when right-clicking images
-                visible: params.linkURL,
-                click: () => {
-                    addTab(params.linkURL)
-                }
-            },
-            {
-                label: 'Search Web for {selection}',
-                // Only show it when right-clicking text
-                visible: params.selectionText.trim().length > 0,
-                click: () => {
-                    fs.readFile(__dirname + '/system/data/engine.pocket', function (err, data) {
-                        if (err) {
-                            pocket.error("Couldn't read file: ./system/data/engine.pocket: " + err)
-                            throw err;
-                        }
-                        addTab(String(data).replace("%s", encodeURIComponent(params.selectionText)));
-                        pocket.info("Searched via search engine: " + data)
-                    });
+        contextMenu({
+            window: targetTab.webview,
+            showCopyImageAddress: true,
+            showSaveImage: true,
+            showSearchWithGoogle: false,
+            showInspectElement: true,
+            prepend: (defaultActions, params, browserWindow) => [
+                {
+                    label: 'Open link in new tab',
+                    // Only show it when right-clicking images
+                    visible: params.linkURL,
+                    click: () => {
+                        addTab(params.linkURL)
+                    }
+                },
+                {
+                    label: 'Search Web for {selection}',
+                    // Only show it when right-clicking text
+                    visible: params.selectionText.trim().length > 0,
+                    click: () => {
+                        fs.readFile(__dirname + '/system/data/engine.pocket', function (err, data) {
+                            if (err) {
+                                pocket.error("Couldn't read file: ./system/data/engine.pocket: " + err)
+                                throw err;
+                            }
+                            addTab(String(data).replace("%s", encodeURIComponent(params.selectionText)));
+                            pocket.info("Searched via search engine: " + data)
+                        });
 
+                    }
                 }
-            }
-        ]
-    });
-
+            ]
+        });
     })
 
 // when page finishes loading, run changeAddress functiion.
     targetTab.webview.addEventListener('did-finish-load',function(){
-     //   changeAddress(targetTab)
+     //   changeAddress(targetTab);
+        resetState(targetTab);
+
+        //Ad Blocker.
+        fs.readFile(__dirname + "/system/data/adb.pocket",function (err,data) {
+            if (err) return console.log(err);
+            if (data == "false") return;
+            targetTab.webview.executeJavaScript("var totalAds = 0;\n" +
+                "var nbOfScripts = document.getElementsByTagName(\"script\").length;\n" +
+                "for (var i = 0;i<nbOfScripts;i++) {\n" +
+                "    if (document.getElementsByTagName(\"script\")[i].src.includes(\"adservice\") || document.getElementsByTagName(\"script\")[i].src.includes(\"googlead\") || document.getElementsByTagName(\"script\")[i].src.includes(\"adsbygoogle\")) {\n" +
+                "        document.getElementsByTagName(\"script\")[i].src= \"\";\n" +
+                "        console.log(\"Ad removed by Pocket Browser\")\n" +
+                "        totalAds++;\n" +
+                "    }\n" +
+                "}\n" +
+                "var nbOfLinks = document.getElementsByTagName(\"link\").length;\n" +
+                "for (var l = 0;l<nbOfLinks;l++) {\n" +
+                "    if (document.getElementsByTagName(\"link\")[l].href.includes(\"adservice\") || document.getElementsByTagName(\"link\")[l].href.includes(\"googlead\")) {\n" +
+                "        document.getElementsByTagName(\"link\")[l].href= \"\";\n" +
+                "        console.log(\"Ad removed by Pocket Browser\")\n" +
+                "        totalAds++;\n" +
+                "    }\n" +
+                "}\n" +
+                "\n" +
+                "var nbOfAds = document.getElementsByClassName(\"adsbygoogle\").length;\n" +
+                "for (var i = 0;i<nbOfAds;i++) {\n" +
+                "    document.getElementsByClassName(\"adsbygoogle\")[i].innerHTML = \"\";\n" +
+                "    console.log(\"Ad removed by Pocket Browser\");\n" +
+                "    totalAds++;\n" +
+                "}")
+        })
+
+
     });
     // when page favicon is updated, run change favicon function.
     targetTab.webview.addEventListener("page-favicon-updated",function () {
@@ -94,7 +128,8 @@ document.getElementById("findResults").innerHTML = event.result.matches;
 
     })
 
-    targetTab.webview.addEventListener("will-navigate",function (event) {
+    targetTab.webview.addEventListener("did-navigate",function (event) {
+        event.preventDefault();
     changeAddress(targetTab,event);
     })
     targetTab.webview.addEventListener("did-navigate-in-page",function (event) {
@@ -129,9 +164,6 @@ tabGroup.on("tab-removed", (functionTab, tabGroup) => {
 document.getElementById("address").addEventListener('drop',function (event) {
 event.preventDefault();
     document.getElementById('address').value = event.dataTransfer.getData("Text")
-})
-document.getElementById("tabgroup").addEventListener('drop',function (event) {
-alert()
 })
 
 //select all text in address bar when clicked on it.
@@ -168,6 +200,8 @@ window.addEventListener("keypress",function (event) {
             openSystemPage("settings");
         } else if (event.key === 'j') {
             openSystemPage("downloads")
+        } else if (event.key == "escape") {
+            document.getElementById("address").value = tabGroup.getActiveTab().webview.src;
         }
     }
 })
@@ -190,6 +224,10 @@ window.addEventListener("keypress",function (event) {
         },
         onSelect: function (item) {
 document.getElementById("address").value = item.value;
-loadURL();
+document.getElementById("go").click();
         }
     });
+
+const emittedOnce = (element, eventName) => new Promise(resolve => {
+    element.addEventListener(eventName, event => resolve(event), { once: true })
+})

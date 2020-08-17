@@ -26,8 +26,8 @@
  <script src="external/popper.js"></script>
  <script src="external/bootstrap.js"></script>
  <link rel="stylesheet" href="external/bootstrap.css">
-<link rel="stylesheet" href="node_modules/autocompleter/autocomplete.css">
-        <link rel="stylesheet" href="node_modules/dist/dragula.css">
+<link rel="stylesheet" href="external/autocomplete.css">
+        <link rel="stylesheet" href="node_modules/dragula/dist/dragula.css">
 
         <title>Pocket Browser</title>
     </head>
@@ -46,6 +46,7 @@
             <div class="dropdown-menu">
                 <p class="custom-dropdown-item" style="color: #006400" id="secureText">Secure connection via <b>HTTPS</b></p>
                 <div class="dropdown-divider"></div>
+
                 <p class="custom-dropdown-item"><b>Permissions:</b></p>
                 <button type="button" class="dropdown-item" onclick="changeSitePerms(0)">Notifications</button>
                 <button type="button" class="dropdown-item" onclick="changeSitePerms(1)">Popups</button>
@@ -74,7 +75,7 @@
                 <button class="dropdown-item" type="button" onclick="loadDev()">Developer Tools</button>
                 <button class="dropdown-item" type="button" onclick="openSystemPage('history')">History<small>     -     Ctrl+H</small></button>
                 <button class="dropdown-item" type="button">Downloads<small>     -     Ctrl+J</small></button>
-                <button class="dropdown-item" type="button">Extentions</button>
+                <button class="dropdown-item" type="button" onclick="openSystemPage('extensions')">Extentions</button>
                 <div class="custom-dropdown-item"><button class="btn custom-btn-light" type="button" onclick="findInPage()">Find</button> <b> | </b> <button class="btn custom-btn-light" onclick="zoom('add')"><img src="node_modules/bootstrap-icons/icons/zoom-in.svg" width="15" height="15" title="Zoom In"> </button> <button class="btn custom-btn-light" onclick="zoom('minus')"><img src="node_modules/bootstrap-icons/icons/zoom-out.svg" width="15" height="15" title="Zoom out"> </button> </div>
                 <button class="dropdown-item" type="button" onclick="openSystemPage('settings')">Settings<small>     -     Ctrl+Alt+S</small></button>
                 <button class="dropdown-item" type="button" onclick="openSystemPage('about')">About</button>
@@ -87,7 +88,7 @@
 
 
         </nav>
-        <div class="etabs-tabgroup bg-light" id="tabgroup">
+        <div class="etabs-tabgroup bg-light">
             <div class="etabs-tabs"></div>
             <div class="etabs-buttons"></div>
           </div>
@@ -133,7 +134,7 @@ goHome();
         <div id="toasts">
         <div id="toast" class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-delay="10000">
             <div class="toast-header">
-                <img src="icon.ico" class="rounded mr-2" alt="Pb" width="25" height="25">
+                <img src="system/favicon.ico" class="rounded mr-2" alt="Pb" width="25" height="25">
                 <strong class="mr-auto" id="notifyTitle"></strong>
                 <small></small>
                 <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
