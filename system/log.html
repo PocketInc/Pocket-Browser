@@ -37,7 +37,7 @@
     const lbl = require("line-by-line");
     const logReader = new lbl(logPath)
     logReader.on("line",function (line) {
-        document.getElementById("info").innerHTML += line + "<br>";
+        document.getElementById("info").innerHTML += line.replace("[INFO]","<b style='color:yellow'>[INFO]</b>").replace("[ERR]","<b style='color:red'>[ERR]</b>") + "<br>";
         console.log("new line.")
     })
     function resetLog() {

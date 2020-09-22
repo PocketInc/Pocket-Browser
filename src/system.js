@@ -5,11 +5,10 @@
  github.com/PocketInc/Pocket-Browser
  */
 
-pocket.info("Loading system")
 function isSystemPage(url) {
     //identify if url is system page by checking if from chars 0 to 9 are "pocket://"
     if (url.slice(0, 9).toLowerCase() === "pocket://") {
-        pocket.info("System page is detected by function")
+        pocket.info("System page is detected.")
         return true;
 
     }
@@ -20,10 +19,9 @@ function isSystemPage(url) {
 function openSystemPage(page) {
 
     if (!page || page === "") page = "about";
-    fs.access(__dirname + '/system/' + page + '.html', fs.constants.F_OK | fs.constants.W_OK, (err) => {
-        if (err) {
-            return pocket.info("Couldn't find system page: " + page);
-        } else {
+            if (!require("fs").existsSync(__dirname + "/system/" + page + ".html")) {
+                return;
+            }
             pocket.info("Loading system page: " + page);
             const systemPage = new electron.BrowserWindow({
                 //default width and height of electron window
@@ -47,9 +45,6 @@ function openSystemPage(page) {
             //set title, will be changed when html title is loaded.
             systemPage.setTitle(page + " - Pocket Browser")
 
-
-        }
-    })
 }
 //function for loading system pages in a tab instead of in a window.
 function loadSystemPage(page, window = 0,target) {

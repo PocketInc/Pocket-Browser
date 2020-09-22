@@ -1,11 +1,11 @@
 const fs = require('fs');
-const log = require('electron-log');
-    
-    function getSettings() {
-    fs.readFile(__dirname + '/data/engine.pocket', function (err, data) {
+var dataPath = require("electron").remote.app.getPath("userData");
+
+function getSettings() {
+    fs.readFile(dataPath + '/data/engine.pocket', function (err, data) {
       if (err) {
-          pocket.error("Couldn't load file: /system/data/engine.pocket: " + err)
-        throw err; 
+          console.error("Error " + err + ": /userData/data/engine.pocket")
+          return document.getElementById("currentEngine").innerHTML += "<b>No Search Engine</b>"
       }
       try {
       
@@ -13,9 +13,9 @@ const log = require('electron-log');
     document.getElementById("currentEngine").innerHTML += "<b>" + engine + "</b>";
         
       } catch(err) {
-          pocket.error("Couldn't add currentEngine URL");
-          pocket.error("Normal: " + data);
-          pocket.error("With Cut: " + engine)
+          console.error("Error " + err + ": while getting engine data");
+          console.error("Normal: " + data);
+          console.error("With Cut: " + engine)
       }
     });    
 }
@@ -23,9 +23,13 @@ const log = require('electron-log');
 
 
 function changeSearchEngine() {
+    if (!fs.existsSync(dataPath + "/data")){
+        fs.mkdirSync(dataPath + "/data");
+    }
+
 var newEngine = document.getElementById("engine").value;
 
-fs.writeFile(__dirname + '/data/engine.pocket', newEngine, function (err) {
+fs.writeFile(dataPath + '/data/engine.pocket', newEngine, function (err) {
     if (err) {
       throw err; 
     }

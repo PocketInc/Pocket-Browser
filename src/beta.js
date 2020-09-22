@@ -17,73 +17,16 @@ document.getElementById("notifyBody").innerHTML = body;
     $("#toast").toast("show");
 
 }
-function changeTheme(hexColor, hexColor2,save) {
-var allBtns = document.getElementsByClassName("btn-light");
-
-for (var i = 0;i<allBtns.length;i++) {
-    allBtns.item(i).style = "background-color: " + hexColor + "!important;border: 0.5px solid black";
-    }
-document.getElementById("address").style = "background-color: " + hexColor2 + "!important";
-
-document.getElementById("nav").style = "background-color: " + hexColor2 + "!important";
-
-document.getElementById("tabgroup").style = "background-color: " + hexColor2 + "!important"
-
-    var allTabs = document.getElementsByClassName("etabs-tab");
-    for (var i = 0;i<allTabs.length;i++) {
-        allTabs.item(i).style = "background-color: " + hexColor + "!important";
-    }
-    if (save === true) {
-        fs.writeFile(__dirname + '/system/data/theme.pocket', hexColor + "\n" + hexColor2, function (err) {
-            if (err) return pocket.info(err);
-            betaNotify("Pocket Browser", "Theme is successfully changed!");
-        });
-    }
-}
 function loadTheme() {
-const themeReader = new linebyline(__dirname + "/system/data/theme.pocket");
-var themeNb = 0;
-var hexColor;
-var hexColor2
-themeReader.on("line",function (line) {
-if (themeNb == 0)  {
-     hexColor = line;
-    themeNb++;
-    pocket.info(line)
-} else if (themeNb == 1) {
-     hexColor2 = line;
-     pocket.info("2 " + line)
-}
-
-})
-
-themeReader.on("end",function () {
-    if (hexColor == "null" || hexColor2 == "null") return;
-    pocket.info(hexColor + " " + hexColor)
-changeTheme(hexColor,hexColor2,false)
+document.getElementsByClassName("btn").item(item => function () {
+    item.style.backgroundColor = "red!important"
 })
 }
-function deleteTheme() {
-    var allBtns = document.getElementsByClassName("btn-light");
+var dataPath = require("electron").remote.app.getPath("userData");
 
-    for (var i = 0;i<allBtns.length;i++) {
-        allBtns.item(i).style = "";
+fs.readFile(dataPath + "/data/theme.pocket","utf8",function (err,data) {
+    if (err) return console.log(err);
+    if (data == "dark") {
+        loadTheme()
     }
-    document.getElementById("address").style = "";
-
-    document.getElementById("nav").style = "";
-
-    document.getElementById("tabgroup").style = ""
-
-    var allTabs = document.getElementsByClassName("etabs-tab");
-    for (var i = 0;i<allTabs.length;i++) {
-        allTabs.item(i).style = "";
-    }
-
-        fs.writeFile(__dirname + '/system/data/theme.pocket', "null\nnull", function (err) {
-            if (err) return pocket.info(err);
-            betaNotify("Pocket Browser", "Theme is successfully removed!");
-        });
-
-}
-//loadTheme();
+})

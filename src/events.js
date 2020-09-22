@@ -1,5 +1,5 @@
 const contextMenu = require('electron-context-menu'); //require context menu module.
-
+var dataPath = require("electron").remote.app.getPath("userData");
 
 //Function to easily add and modify tab events.
 
@@ -10,7 +10,7 @@ function addEventsToTab(targetTab) {
 
         //USER AGENT:
         // change useragent to Pb's official user agent.
-        var newAgent = targetTab.webview.getUserAgent().replace(" Electron/" + process.versions['electron'],"").replace("PocketBrowser/1.5.0","Edg/84.0.522.44")
+        var newAgent = targetTab.webview.getUserAgent().replace(" Electron/" + process.versions['electron'],"").replace("PocketBrowser/1.5.1","Edg/84.0.522.44")
 
         targetTab.webview.setUserAgent(newAgent)
 
@@ -34,13 +34,12 @@ function addEventsToTab(targetTab) {
                     // Only show it when right-clicking text
                     visible: params.selectionText.trim().length > 0,
                     click: () => {
-                        fs.readFile(__dirname + '/system/data/engine.pocket', function (err, data) {
+                        fs.readFile(dataPath + '/data/engine.pocket', function (err, data) {
                             if (err) {
-                                pocket.error("Couldn't read file: ./system/data/engine.pocket: " + err)
+                                pocket.error("Error " + err + ": ./system/data/engine.pocket")
                                 throw err;
                             }
                             addTab(String(data).replace("%s", encodeURIComponent(params.selectionText)));
-                            pocket.info("Searched via search engine: " + data)
                         });
 
                     }
@@ -51,11 +50,10 @@ function addEventsToTab(targetTab) {
 
 // when page finishes loading, run changeAddress functiion.
     targetTab.webview.addEventListener('did-finish-load',function(){
-     //   changeAddress(targetTab);
         resetState(targetTab);
 
         //Ad Blocker.
-        fs.readFile(__dirname + "/system/data/adb.pocket",function (err,data) {
+        fs.readFile(dataPath + "/data/adb.pocket","utf8",function (err,data) {
             if (err) return console.log(err);
             if (data == "false") return;
             targetTab.webview.executeJavaScript("var totalAds = 0;\n" +
@@ -96,7 +94,6 @@ function addEventsToTab(targetTab) {
     });
     // when page title is updated, then run change title function.
     targetTab.webview.addEventListener('page-title-updated', function(){
-        pocket.info("title change attempt")
         changeTitle(targetTab,event)
     })
     targetTab.webview.addEventListener('did-fail-load',function (event) {
@@ -135,7 +132,6 @@ document.getElementById("findResults").innerHTML = event.result.matches;
     targetTab.webview.addEventListener("did-navigate-in-page",function (event) {
         changeAddress(targetTab,event);
     })
-
 }
 //Other Events
 
@@ -147,7 +143,6 @@ backOnline();
 window.addEventListener('offline', function (event) {
 wentOffline()
 })
-
 
 //Add new tab when there's no tabs.
 tabGroup.on("tab-removed", (functionTab, tabGroup) => {

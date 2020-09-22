@@ -87,3 +87,15 @@ button:hover {
 .container {
     padding-left: 20%;
 }
+.input {
+    width: 50%;
+    border-radius: 5px;
+    outline-color: darkslategrey;
+    border: 2px solid darkslategrey;
+    background-color: lightskyblue;
+    transition: background-color 1s ease-out;
+}
+.input:focus {
+    color: lightskyblue;
+    background-color: darkslategrey;
+}

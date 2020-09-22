@@ -1,18 +1,17 @@
 const fs = require('fs');
-const log = require('electron-log');
-
+var dataPath = require("electron").remote.app.getPath("userData");
 window.onload = function() {
     
-    fs.readFile(__dirname + '/data/home.pocket', function (err, data) {
+    fs.readFile(dataPath + '/data/home.pocket', function (err, data) {
       if (err) {
-         pocket.error("Couldn't load file: /system/data/home.pocket: " + err);
-        throw err; 
+         console.error("Error " + err + ": /userData/data/home.pocket");
+         return document.getElementById("currentHome").innerHTML += "<b>https://duck.com</b>";
       }
       try {
     document.getElementById("currentHome").innerHTML += "<b>" + data + "</b>";
       } catch(err) {
-        pocket.error("Couldn't add currentHome URL");
-        pocket.error("URL: " + data);
+        console.error("Error " + err + ": inserting current home.");
+        console.error("Home URL: " + data);
       }
     });    
     
@@ -21,11 +20,12 @@ window.onload = function() {
 }
 function changeHomePage() {
 var newHome = document.getElementById("home").value;
-
-fs.writeFile(__dirname + '/data/home.pocket', newHome, function (err) {
+    if (!fs.existsSync(dataPath + "/data")){
+        fs.mkdirSync(dataPath + "/data");
+    }
+fs.writeFile(dataPath + '/data/home.pocket', newHome, function (err) {
     if (err) {
-      
-      throw err; 
+      throw err;
     }
 
   });
