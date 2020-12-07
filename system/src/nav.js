@@ -4,7 +4,7 @@
 
 document.getElementById("nav").innerHTML = '<p style="text-align: center"><img src="../style/s-icon.png"></p>\n' +
     '            <hr style="border-color: black;width: 25%">\n' +
-    '        <a href="settings.html"><button>Search</button></a>\n' +
+    '        <a href="search.html"><button>Search</button></a>\n' +
     '        <br>\n' +
     '        <a href="home.html"><button>Home Page</button></a>\n' +
     '        <br>\n' +

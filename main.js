@@ -6,7 +6,7 @@
  */
 
 // Modules to control application life and create native browser window
-const {app, BrowserWindow, ipcMain,dialog} = require('electron')
+const {app, BrowserWindow, ipcMain,dialog, session} = require('electron')
 const path = require('path')
 function createWindow () {
   // Create the browser window.
@@ -19,7 +19,7 @@ function createWindow () {
       //allows node to work in HTML and JS files.
       nodeIntegration: true,
       webviewTag: true,
-      nativeWindowOpen: true
+      enableRemoteModule: true
 
     }
   })
@@ -31,7 +31,11 @@ function createWindow () {
 
   const newAgent = mainWindow.webContents.getUserAgent().replace(" Electron/" + process.versions['electron'],"")
   mainWindow.webContents.setUserAgent(newAgent)
-  }
+
+    session.defaultSession.on("will-download",function (e,item) {
+        item.setSavePath(app.getPath("downloads") + "/" + item.getFilename())
+    })
+ }
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.

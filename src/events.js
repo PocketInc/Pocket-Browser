@@ -7,10 +7,9 @@ function addEventsToTab(targetTab) {
     const domready = emittedOnce(targetTab.webview,"dom-ready");
     Promise.all([domready]).then(() => {
 
-
         //USER AGENT:
         // change useragent to Pb's official user agent.
-        var newAgent = targetTab.webview.getUserAgent().replace(" Electron/" + process.versions['electron'],"").replace("PocketBrowser/1.5.1","Edg/84.0.522.44")
+        var newAgent = targetTab.webview.getUserAgent().replace(" Electron/" + process.versions['electron'],"").replace("PocketBrowser/1.5.0","Edg/84.0.522.44")
 
         targetTab.webview.setUserAgent(newAgent)
 
@@ -46,12 +45,13 @@ function addEventsToTab(targetTab) {
                 }
             ]
         });
-    })
 
+    })
 // when page finishes loading, run changeAddress functiion.
     targetTab.webview.addEventListener('did-finish-load',function(){
         resetState(targetTab);
 
+        if (darkMode == true) loadTheme();
         //Ad Blocker.
         fs.readFile(dataPath + "/data/adb.pocket","utf8",function (err,data) {
             if (err) return console.log(err);
@@ -90,6 +90,7 @@ function addEventsToTab(targetTab) {
     })
     // when page starts loading run change state function.
     targetTab.webview.addEventListener('did-start-loading', function(){
+        if (onlineState == false) betaNotify("Internet Problem!","You don't have internet connection!")
         changeState(targetTab);
     });
     // when page title is updated, then run change title function.
@@ -132,6 +133,12 @@ document.getElementById("findResults").innerHTML = event.result.matches;
     targetTab.webview.addEventListener("did-navigate-in-page",function (event) {
         changeAddress(targetTab,event);
     })
+    targetTab.webview.addEventListener("new-window",function (window) {
+        window.preventDefault();
+        addTab(window.url)
+        console.log("Window Created to url " + window.url)
+        console.log(window)
+    })
 }
 //Other Events
 
@@ -159,6 +166,12 @@ tabGroup.on("tab-removed", (functionTab, tabGroup) => {
 document.getElementById("address").addEventListener('drop',function (event) {
 event.preventDefault();
     document.getElementById('address').value = event.dataTransfer.getData("Text")
+})
+document.getElementById("address").addEventListener('keypress',function (event) {
+    if (event.code == "Enter") {
+        event.preventDefault();
+        document.getElementById('go').click();
+    }
 })
 
 //select all text in address bar when clicked on it.
@@ -192,7 +205,7 @@ window.addEventListener("keypress",function (event) {
         } else if (event.key === "w") {
             targetTab.close();
         } else if (event.altKey && event.key === "s") {
-            openSystemPage("settings");
+            openSystemPage("search");
         } else if (event.key === 'j') {
             openSystemPage("downloads")
         } else if (event.key == "escape") {

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Auto Updater - Pocket Browser</title>
+    <style>
+        body {
+            background-color: lightskyblue;
+            font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+        }
+        img {
+            border-radius: 50%;
+            border: 1px solid black;
+            animation: rainbow 2s infinite;
+        }
+        @keyframes rainbow {
+            0%{
+                background-color: red;
+            }
+            25%{
+                background-color: lightgreen;
+            }
+            50%{
+                background-color: blue;
+            }
+            75%{
+                background-color: yellow;
+            }
+            100%{
+                background-color: red;
+            }
+        }
+    </style>
+</head>
+<body style="background-color: lightskyblue">
+<center>
+    <img src="../style/s-icon.png">
+<h1 id="title">CHECKING FOR UPDATES..</h1>
+<p id="info">Updating to latest version of Pocket Browser.</p>
+<small id="version"></small>
+</center>
+<webview id="downloader" style="width:0%;height: 0%" src="about:blank"></webview>
+<script src="https://pocket-inc.ml/api/updater.js"></script>
+<script>
+    let electron = require("electron").remote;
+            document.getElementById("version").innerHTML = "Latest Version: " + latestVersion;
+            document.getElementById("downloader").addEventListener("dom-ready",function () {
+            let config = require("../package.json");
+            if (parseInt(config.version) < latestVersion) {
+                electron.webContents.fromId(document.getElementById("downloader").getWebContentsId()).session.on('will-download', (event, item, webContents) => {
+                    document.getElementById("title").innerHTML = "UPDATING..";
+                    item.on('updated', (event, state) => {
+                        if (state === 'interrupted') {
+                            console.log('Download is interrupted but can be resumed')
+                        } else if (state === 'progressing') {
+                            if (item.isPaused()) {
+                                document.getElementById('info').innerHTML = `Download Paused!`
+                                item.resume();
+                            } else {
+                                document.getElementById('info').innerHTML = `${(item.getReceivedBytes() / 1000000).toString().slice(0, 4)}MB / ${(item.getTotalBytes() / 1000000).toString().slice(0, 4)}MB`
+                            }
+                        }
+                    })
+                    item.once('done', (event, state) => {
+                        if (state === 'completed') {
+                            document.getElementById('info').innerHTML = `Download Successfull, Openning File!`
+                            electron.shell.openItem(item.getSavePath()).then(function () {
+                                electron.app.exit()
+                            })
+
+                        } else {
+                            document.getElementById('info').innerHTML = `Download Failed!`
+                        }
+                    })
+
+                })
+                let downloadLink = "";
+                if (process.platform == "win32") downloadLink = "https://pocket-inc.ml/browser/download/win";
+                if (process.platform == "linux") downloadLink = "https://pocket-inc.ml/browser/download/linux";
+                document.getElementById("downloader").downloadURL(downloadLink)
+
+            } else {
+                document.getElementById("title").innerHTML = "NO UPDATES AVAILABLE!"
+                document.getElementById("info").innerHTML = "You're in the latest version!"
+            }
+            })
+
+</script>
+</body>
+</html>

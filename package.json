@@ -10,8 +10,7 @@
     "dragula": "^3.7.2",
     "electron": "^9.0.5",
     "electron-context-menu": "^2.1.0",
-    "electron-log": "^4.2.2",
-    "electron-packager": "^15.0.0",
+    "electron-builder": "latest",
     "electron-tabs": "^0.15.0",
     "fs": "0.0.1-security",
     "line-by-line": "^0.1.6",
@@ -22,7 +21,7 @@
   },
   "scripts": {
     "start": "electron .",
-    "build": "electron-packager ./ --app-copyright Pocket,Inc. --icon ./icon.ico --overwrite"
+    "build": "electron-builder"
   },
   "author": "Pocket, Inc.",
   "repository": {

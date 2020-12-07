@@ -84,6 +84,20 @@ button:hover {
     color: lightskyblue;
     border-color: darkslategrey;
 }
+
+.btn {
+    background-color: lightskyblue;
+    transition-duration: 0.7s;
+    color: darkslategrey;
+    border: 2px solid black;
+    height: 5%;
+    text-decoration: none;
+}
+.btn:hover {
+    background-color: darkslategrey; /* Green */
+    color: lightskyblue;
+    border-color: darkslategrey;
+}
 .container {
     padding-left: 20%;
 }

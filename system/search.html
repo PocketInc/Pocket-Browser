@@ -1,0 +1,22 @@
+<html>
+<head>
+    <title>Search Engine - Settings</title>
+    <link rel="stylesheet" href="src/style.css">
+</head>
+<body onload="getSettings()">
+<div id="body">
+    <nav id="nav"></nav>
+    <h3>Search Engine:</h3>
+
+    <p><input class="input" id="engine" placeholder="http://example.com/%s"></p>
+    <button onclick="changeSearchEngine()">Change</button>
+    <h6 style="text-align: center;">Write <u>%s</u> instead of SearchTerm</h6>
+    <hr style="width:25%">
+    <p id="currentEngine">Current Engine: </p>
+
+</div>
+
+<script src="src/search.js"></script>
+<script src="src/nav.js"></script>
+</body>
+</html>

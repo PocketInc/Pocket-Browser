@@ -70,7 +70,6 @@ function goHome() {
     })
 
 }
-
 //function to reload active  tab.
 function reloadPage() {
     var getTab = tabGroup.getActiveTab();
@@ -175,6 +174,7 @@ function backOnline() {
         pocket.info("Warning: Connection is back.")
         onlineState=true;
         document.getElementById("wifi").hidden = "hidden";
+        reloadPage()
 
         betaNotify("Connection is back!","You're reconnected to the Internet.")
     }
@@ -402,20 +402,32 @@ function checkPerms(target,event) {
 }
 
 //ToDo: Continue Cookie Manager.
+
+var allCookies = [];
 function showCookies(event) {
-    var domains = {}
-    electron.session.defaultSession.cookies.get({ url: event.url })
+    allCookies = [];
+    var url = event.url;
+    electron.session.defaultSession.cookies.get({ url: url })
         .then((cookies) => {
             document.getElementById("cookies").innerHTML = "";
             for(var i = 0;i<cookies.length;i++) {
-                if (!domains.i) {
-                    domains.i = true;
-                    document.getElementById("cookies").innerHTML += "<p class='dropdown-item'>" + cookies[i].domain + "</p>";
-                }
+                //if (!domains.i) {
+                //    domains.i = true;
+                allCookies[i] = cookies[i];
+                allCookies[i].url = url;
+                    document.getElementById("cookies").innerHTML += "<p class='dropdown-item' onclick='loadCookie(" + i + ")'>" + cookies[i].name + "</p>";
+                //}
             }
         }).catch((error) => {
         pocket.error("Error " + error + ": while showing cookies.")
     })
+}
+function loadCookie(cookie) {
+   var delCookie = confirm("Name: " + allCookies[cookie].name + "\nDomain: " + allCookies[cookie].domain + "\nPath: " + allCookies[cookie].path + "\nExpires: " + allCookies[cookie].expirationDate + "\nValue:\n" + allCookies[cookie].value + "\n\nDelete Cookie?")
+
+    if (delCookie == true) {
+        electron.session.defaultSession.cookies.remove(allCookies[cookie].url, allCookies[cookie].name)
+    }
 }
 var dataPath = require("electron").remote.app.getPath("userData");
 function addToHistory(url) {

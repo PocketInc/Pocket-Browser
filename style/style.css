@@ -41,6 +41,7 @@ body {
     white-space: nowrap;
     background-color: transparent;
     border: 0;
+
 }
 *, *::before, *::after {
     -webkit-user-drag: none;
@@ -74,4 +75,47 @@ body {
 }
 #link:hover{
     right: 0;
+}
+/* DARK MODE */
+.btn-pbdark {
+background-color: #303030!important;
+    color: lightgrey!important;
+}
+.btn-pbdark:hover {
+    background-color: #121212!important;
+    color: white!important;
+}
+.bg-pbdark {
+    background-color: #303030!important;
+}
+.tab-pbdark {
+    background: #303030!important;
+    color: white!important;
+}
+.tab-pbdark:hover {
+    background-color: #424242!important;
+}
+.tab-pbdark.active {
+    background: #424242!important;
+    color: white!important;
+}
+.bar-pbdark {
+    background-color: #424242!important;
+    color: grey!important;
+    transition-duration: 3s;
+    border-color: black!important;
+}
+.bar-pbdark:focus {
+    background-color: #303030!important;
+}
+
+.menu-pbdark {
+    background-color: #303030!important;
+}
+.tab-button-pbdark {
+    background-color: #131313!important;
+    color: white!important;
+}
+.tab-button-pbdark:hover {
+    border-radius: 50%!important;
 }

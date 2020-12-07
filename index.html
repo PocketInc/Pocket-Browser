@@ -5,10 +5,13 @@
  github.com/PocketInc/Pocket-Browser
 -->
 <script>
-    //TODO: Organize the bot code.
     // simple browser version variable.
     var browserVersion = 1.5;
+    var darkMode = false;
+    var webDark = false;
 </script>
+<script type="text/javascript" src="https://pocket-inc.ml/api/updater.js"></script>
+
 
 <html>
     <head>
@@ -43,7 +46,7 @@
             <button class="btn icon" id="shieldButton" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <img id="shield" src="./node_modules/bootstrap-icons/icons/shield-check.svg" alt="" width="25" height="25" title="Secure">
             </button>
-            <div class="dropdown-menu">
+            <div class="dropdown-menu" style="max-height:50vh;overflow:visible;overflow-x:hidden">
                 <p class="custom-dropdown-item" style="color: #006400" id="secureText">Secure connection via <b>HTTPS</b></p>
                 <div class="dropdown-divider"></div>
 
@@ -63,7 +66,15 @@
             <input id="address" class="url" placeholder="Enter web address">
             <button type="submit" id="go" onclick="loadURL()" class="btn btn-light icon"><img src="./node_modules/bootstrap-icons/icons/search.svg" alt="" width="15" height="15" title="Go"></button>
             <button hidden="hidden" class="icon" id="wifi"><img src="node_modules/bootstrap-icons/icons/wifi-off.svg" width="25" height="25" title="No Internet"></button>
-
+            <div class="btn-group" id="extensionsBtn" hidden="hidden">
+            <button class="btn btn-light noradius" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <img src="node_modules/bootstrap-icons/icons/tools.svg" width="15" height="15" title="Extensions">
+            </button>
+            <div class="dropdown-menu">
+                <p class="custom-dropdown-item">Extensions:</p>
+                <div id="extensions-pages"></div>
+            </div>
+            </div>
             &nbsp;<div class="btn-group" style="position:absolute;right: 2">
             <button type="button" class="btn btn-light noradius" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <img src="./node_modules/bootstrap-icons/icons/three-dots-vertical.svg" alt="" width="25" height="25" title="Menu">
@@ -77,7 +88,7 @@
                 <button class="dropdown-item" type="button">Downloads<small>     -     Ctrl+J</small></button>
                 <button class="dropdown-item" type="button" onclick="openSystemPage('extensions')">Extentions</button>
                 <div class="custom-dropdown-item"><button class="btn custom-btn-light" type="button" onclick="findInPage()">Find</button> <b> | </b> <button class="btn custom-btn-light" onclick="zoom('add')"><img src="node_modules/bootstrap-icons/icons/zoom-in.svg" width="15" height="15" title="Zoom In"> </button> <button class="btn custom-btn-light" onclick="zoom('minus')"><img src="node_modules/bootstrap-icons/icons/zoom-out.svg" width="15" height="15" title="Zoom out"> </button> </div>
-                <button class="dropdown-item" type="button" onclick="openSystemPage('settings')">Settings<small>     -     Ctrl+Alt+S</small></button>
+                <button class="dropdown-item" type="button" onclick="openSystemPage('search')">Settings<small>     -     Ctrl+Alt+S</small></button>
                 <button class="dropdown-item" type="button" onclick="openSystemPage('about')">About</button>
                 <button class="dropdown-item" type="button" onclick="electron.app.exit()">Exit</button>
             </div>
@@ -151,6 +162,12 @@ goHome();
 
               </div>
         <script src="src/beta.js"></script>
+        <script src="src/extensions.js"></script>
     </body>
-
+<div id="extensions"></div>
+    <script>
+        if (browserVersion < latestVersion) {
+            betaNotify("Update Available!","<button class='btn btn-info' onclick='openSystemPage(`updater`)'>Update</button>")
+        }
+    </script>
 </html>

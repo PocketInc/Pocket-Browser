@@ -11,8 +11,16 @@
 <div id="body">
 <nav id="nav"></nav>
     <h3>Extensions:</h3>
+    <h4>Built in:</h4>
     <p>Dark Theme: <input type="checkbox" id="theme" onchange="toggleTheme()"></p>
+    <p>Dark Websites: <input type="checkbox" id="website" onchange="toggleWebsite()"> <small>(Beta)</small></p>
     <p>Ad Blocker: <input type="checkbox" id="ad" onchange="toggleAdb()"></p>
+
+    <hr style="width:25%">
+    <h4>Installed: <a class="btn" href="add_extension.html">&plus;</a></h4>
+    <p id="installed"></p>
+    <hr style="width:25%">
+    <p id="text"></p>
 </div>
 <script src="src/extensions.js"></script>
 <script src="src/nav.js"></script>

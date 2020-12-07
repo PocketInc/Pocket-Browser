@@ -8,18 +8,21 @@
 function addTab(page) {
   const TabGroup = require("electron-tabs")
   //create a tab with title New Tab.
+  //if page is provided, load it.
+  if (page) {
+    var link = page;
+  } else {
+    var link = homePage;
+  }
   let tab = tabGroup.addTab({
-    src: homePage,
+    src: link,
     title: "New Tab",
 
   });
-  //if page is provided, load it.
-  if (page) {
-    tab.webview.src = page;
-  }
   //add events from events.js
   addEventsToTab(tab)
 
+  if (darkMode == true) loadTheme();
 }
 function addWindow() {
   // create newe window
@@ -33,6 +36,6 @@ function addWindow() {
     }
   })
 //load html and remove default menu.
-  newWindow.loadFile('index.html')
+  newWindow.loadFile(__dirname + '/index.html')
   newWindow.setMenu(null)
 }
