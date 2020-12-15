@@ -47,13 +47,15 @@ function openSystemPage(page) {
             systemPage.setTitle(page + " - Pocket Browser")
 }
 //function for loading system pages in a tab instead of in a window.
-function loadSystemPage(page, window = 0,target) {
-    if (window === 0) {
-        document.getElementById("address").value = "pocket://" + page;
-        loadURL();
-    } else if (window === 1) {
-        loadingSystemPage = true;
-        target.webview.loadURL("system/" + page + ".html");
-    }
+function loadSystemPage(page) {
+tabGroup.getActiveTab().webview.src = "system/" + page + ".html";
 
+}
+function systemPageType(page) {
+    let inWindow = ['new'];
+    if (inWindow.includes(page)) {
+        loadSystemPage(page)
+    } else {
+        openSystemPage(page);
+    }
 }

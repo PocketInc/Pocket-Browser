@@ -167,10 +167,13 @@ document.getElementById("address").addEventListener('drop',function (event) {
 event.preventDefault();
     document.getElementById('address').value = event.dataTransfer.getData("Text")
 })
-document.getElementById("address").addEventListener('keypress',function (event) {
-    if (event.code == "Enter") {
+document.getElementById("address").addEventListener('keydown',function (event) {
+    if (event.code === "Enter") {
         event.preventDefault();
         document.getElementById('go').click();
+    } else if (event.key === "Escape") {
+        event.preventDefault()
+        document.getElementById("address").value = tabGroup.getActiveTab().webview.src;
     }
 })
 
@@ -208,8 +211,6 @@ window.addEventListener("keypress",function (event) {
             openSystemPage("search");
         } else if (event.key === 'j') {
             openSystemPage("downloads")
-        } else if (event.key == "escape") {
-            document.getElementById("address").value = tabGroup.getActiveTab().webview.src;
         }
     }
 })
