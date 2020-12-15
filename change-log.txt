@@ -1,5 +1,9 @@
 V1.5:
-
+- Added Ad Blocker.
+- Added Website Dark Theme.
+- Added Dark Theme.
+- Added Custom Extensions.
+- Rebuild the data system.
 - Added secure shield.
 - Added Site Perm Settings.
 - Added Cookies list.

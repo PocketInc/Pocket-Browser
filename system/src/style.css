@@ -56,7 +56,7 @@ nav button {
 
 nav button:hover {
     background-color: darkslategrey; /* Green */
-    color: lightskyblue;
+    color: #87cefa;
     border-color: lightskyblue;
 }
 

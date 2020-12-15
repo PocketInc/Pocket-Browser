@@ -36,6 +36,11 @@
     </head>
     <body>
         <!-- navigation bar -->
+        <div class="etabs-tabgroup bg-light">
+            <div class="etabs-tabs"></div>
+            <div class="etabs-buttons"></div>
+        </div>
+        <div class="etabs-views"></div>
         <nav id="nav" class="nav bg-light">
             <button onclick="goBack()" class="btn btn-light noradius"><img src="./node_modules/bootstrap-icons/icons/arrow-left-short.svg" alt="" width="25" height="25" title="Back"></button>
             <button onclick="goForward()" class="btn btn-light noradius"><img src="./node_modules/bootstrap-icons/icons/arrow-right-short.svg" alt="" width="25" height="25" title="Forward"></button>
@@ -99,11 +104,7 @@
 
 
         </nav>
-        <div class="etabs-tabgroup bg-light">
-            <div class="etabs-tabs"></div>
-            <div class="etabs-buttons"></div>
-          </div>
-          <div class="etabs-views"></div>
+
         <script>
             //create tab group and add a tab.
             const TabGroup = require("electron-tabs");

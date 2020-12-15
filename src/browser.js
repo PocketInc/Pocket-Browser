@@ -195,9 +195,14 @@ function loadURL() {
     if (isSystemPage(url)) {
         pocket.info("Loading system page: " + url);
         loadingSystemPage=true;
-        openSystemPage(url.slice(9).toLowerCase());
+        //openSystemPage(url.slice(9).toLowerCase());
+        var getTab = tabGroup.getActiveTab();
+        getTab.webviewAttributes.nodeIntegration = true;
+        getTab.webview.src = "./system/" + url.slice(9).toLowerCase() + ".html"
+
     } else {
         var getTab = tabGroup.getActiveTab();
+        getTab.webview.nodeIntegration = false;
         if (url.slice(0, 8).toLowerCase() === "https://") {
             pocket.info("Loading via HTTPS")
             loadingSystemPage=false;
