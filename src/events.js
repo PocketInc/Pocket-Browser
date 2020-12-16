@@ -98,16 +98,10 @@ function addEventsToTab(targetTab) {
         changeTitle(targetTab,event)
     })
     targetTab.webview.addEventListener('did-fail-load',function (event) {
-        fs.exists(__dirname + '/system/error/' + event.errorCode + ".html", function (exists) {
-            pocket.error("Error occured: " + event.errorCode + " | " + event.errorDescription);
-            if (event.errorCode == -3) return;
-            if (exists === true) {
-                openSystemPage("error/" + event.errorCode)
-            } else {
-                openSystemPage('error')
-            }
-
-        })
+        betaNotify("Error: " + event.errorCode,event.errorDescription)
+        if (event.errorCode == -21 || event.errorCode == -106) loadSystemPage("connection")
+        if (event.errorCode == -113) loadSystemPage("insecure")
+        if (event.errorCode == -6) loadSystemPage("file")
     })
 targetTab.webview.addEventListener("found-in-page",function (event) {
 document.getElementById("findResults").innerHTML = event.result.matches;

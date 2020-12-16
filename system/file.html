@@ -1,0 +1,55 @@
+<html>
+<head>
+    <script src="./external/jquery.js"></script>
+    <style>
+        body {
+            background-color: lightskyblue;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"
+        }
+        button {
+            background-color: white;
+            border: 2px solid deepskyblue;
+            padding: 10px 24px;
+            transition-duration: 1s;
+            color: deepskyblue;
+            border-radius: 10px;
+        }
+        button:hover {
+            background-color: deepskyblue;
+            color: black;
+
+        }
+        #help {
+            border-left: 2px solid deepskyblue;
+            border-right: 2px solid deepskyblue;
+        }
+    </style>
+    <title>File Error</title>
+</head>
+<body>
+<h2 style="text-align: center;color: deepskyblue"><u>Couldn't find file.</u></h2>
+<p style="text-align: center;">Maybe check the Spelling?</p>
+<p style="text-align: center"><small>Error Code: <b style='color:red'>PB_FILE_DOESN'T_EXIST</b></small></p>
+<hr style="border-color: deepskyblue;width:50%">
+<p style="text-align: center"><button onclick="toggleHelp()">Fix</button></p>
+<div id="help">
+    <ul style="text-align: center;list-style-position: inside;">
+        <li>Check if File name is correct.</li>
+        <br>
+        <li>Make sure file is there.</li>
+        <br>
+        <li>Try Again Later.</li>
+    </ul>
+</div>
+<script>
+    $('#help').hide();
+    function toggleHelp() {
+        if($("#help").is(":visible")){
+            $("#help").hide();
+        } else{
+            $("#help").show();
+        }
+    }
+</script>
+</body>
+</html>

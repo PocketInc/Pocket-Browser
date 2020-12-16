@@ -48,6 +48,7 @@ function openSystemPage(page) {
 }
 //function for loading system pages in a tab instead of in a window.
 function loadSystemPage(page) {
+loadingSystemPage=true;
 tabGroup.getActiveTab().webview.src = "system/" + page + ".html";
 
 }
