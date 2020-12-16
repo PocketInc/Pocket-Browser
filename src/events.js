@@ -98,6 +98,7 @@ function addEventsToTab(targetTab) {
         changeTitle(targetTab,event)
     })
     targetTab.webview.addEventListener('did-fail-load',function (event) {
+        if (event.errorCode == -3) return;
         betaNotify("Error: " + event.errorCode,event.errorDescription)
         if (event.errorCode == -21 || event.errorCode == -106) loadSystemPage("connection")
         if (event.errorCode == -113) loadSystemPage("insecure")
