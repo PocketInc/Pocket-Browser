@@ -23,7 +23,8 @@ height: calc(100% - 95%);
     outline-color: black;
 }
 body {
-    margin:0
+    margin: 0;
+    background-color: #f8f9fa!important;
 }
 #wifi {
     background-color: red;

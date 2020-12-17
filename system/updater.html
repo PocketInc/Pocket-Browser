@@ -46,7 +46,7 @@
             document.getElementById("version").innerHTML = "Latest Version: " + latestVersion;
             document.getElementById("downloader").addEventListener("dom-ready",function () {
             let config = require("../package.json");
-            if (parseInt(config.version) < latestVersion) {
+            if (parseFloat(config.version) < parseFloat(latestVersion)) {
                 electron.webContents.fromId(document.getElementById("downloader").getWebContentsId()).session.on('will-download', (event, item, webContents) => {
                     document.getElementById("title").innerHTML = "UPDATING..";
                     item.on('updated', (event, state) => {

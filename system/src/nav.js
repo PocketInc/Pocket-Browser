@@ -8,8 +8,8 @@ document.getElementById("nav").innerHTML = '<p style="text-align: center"><img s
     '        <br>\n' +
     '        <a href="home.html"><button>Home Page</button></a>\n' +
     '        <br>\n' +
-    '        <button>Downloads</button>\n' +
-    '        <br>\n' +
     '        <a href="extensions.html"><button>Extensions</button></a>\n' +
     '        <br>\n' +
+    `        <a href="sync.html"><button>Sync</button></a>` +
+    `        <br>\n` +
     '        <a href="about-settings.html"><button>About</button></a>\n'

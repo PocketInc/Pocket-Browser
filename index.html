@@ -6,7 +6,7 @@
 -->
 <script>
     // simple browser version variable.
-    var browserVersion = 1.5;
+    var browserVersion = "1.5.0";
     var darkMode = false;
     var webDark = false;
 </script>
@@ -167,8 +167,8 @@ goHome();
     </body>
 <div id="extensions"></div>
     <script>
-        if (browserVersion < latestVersion) {
-            betaNotify("Update Available!","<button class='btn btn-info' onclick='openSystemPage(`updater`)'>Update</button>")
+        if (parseFloat(browserVersion) < parseFloat(latestVersion)) {
+            betaNotify("Update Available!","<button class='btn btn-info btn-sm' onclick='openSystemPage(`updater`)'>Update</button>")
         }
     </script>
 </html>
