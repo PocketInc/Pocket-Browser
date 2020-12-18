@@ -52,12 +52,13 @@
 </head>
 <body>
 <p style="text-align: center"><img src="../style/b-icon.png"></p>
-<p style="text-align: center"><input></p>
-<p style="text-align: center"><button onclick="loadURL()">Go</button></p>
+<p style="text-align: center"><input id="search"></p>
+<p style="text-align: center"><button onclick="loadURL()" style="background-color: #00BBD9">Go</button></p>
 
 <script>
     function loadURL() {
-
+    let term = document.getElementById('search').value.replace(/ /g,"+");
+    window.open("https://duckduckgo.com/?q=" + term)
     }
 </script>
 </body>

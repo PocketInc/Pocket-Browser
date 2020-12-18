@@ -1,3 +1,9 @@
+v1.6:
+- Added Updater.
+- Added Sync.
+- Rebuilt the design.
+- Added few keyboard and mouse shortcuts.
+
 V1.5:
 - Added Ad Blocker.
 - Added Website Dark Theme.

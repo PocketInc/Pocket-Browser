@@ -120,3 +120,4 @@ background-color: #303030!important;
 .tab-button-pbdark:hover {
     border-radius: 50%!important;
 }
+*:focus {outline: none}

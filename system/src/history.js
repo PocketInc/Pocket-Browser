@@ -12,7 +12,7 @@ historyRead.on("line",function (line) {
     else var title = line;
 document.getElementById("history").innerHTML = "<div style=\"border:1px solid #f8f9fa\">\n" +
     "    <a href='" + line + "' title='" + line + "'>" + title + "</a>\n" +
-    "<b><button class='x' onclick='removeHistory(" + nbOfresults + ")'>x</button></b>" +
+    "<b style='float: right;'><button class='x' onclick='removeHistory(" + nbOfresults + ")'>x</b>" +
     "</div>" + document.getElementById("history").innerHTML;
 nbOfresults++;
 })

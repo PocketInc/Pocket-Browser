@@ -63,6 +63,8 @@ if (fs.readFileSync(dataPath + "/data/home.pocket")) fetch("https://pocket-inc.m
     if (fs.readFileSync(dataPath + "/data/theme.pocket")) fetch("https://pocket-inc.ml/api/browser/save_data.php?type=theme&data=" + fs.readFileSync(dataPath + "/data/theme.pocket",{encoding: "utf8"}),opts)
     if (fs.readFileSync(dataPath + "/data/website.pocket")) fetch("https://pocket-inc.ml/api/browser/save_data.php?type=website&data=" + fs.readFileSync(dataPath + "/data/website.pocket",{encoding: "utf8"}),opts)
 
-
+    console.log("Done!")
+    document.getElementById("info").innerHTML = "Done!";
+    document.getElementById("info").style.color = "black";
 
 }

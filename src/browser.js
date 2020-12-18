@@ -319,8 +319,12 @@ function changeSecureState(state) {
 
 function changeSitePerms(perm) {
 var getTab = tabGroup.getActiveTab();
+    var dataPath = require("electron").remote.app.getPath("userData");
+
+if (!fs.existsSync(dataPath + "/data/perms")) fs.mkdirSync(dataPath + "/data/perms");
 if (perm === 0) {
     //notifications
+    if (!fs.existsSync(dataPath + "/data/perms/not")) fs.mkdirSync(dataPath + "/data/perms/not")
  var notPerm = confirm("Do you want to give notifications access to current website?");
 
     if (getTab.webview.src.slice(0,8) === "https://") {
@@ -338,7 +342,6 @@ if (perm === 0) {
     }
 
  if (notPerm === true) {
-     var dataPath = require("electron").remote.app.getPath("userData");
 
      fs.writeFile(dataPath + '/data/perms/not/' + address, 'true', function (err) {
          if (err) return pocket.error(err);
@@ -398,7 +401,21 @@ function checkPerms(target,event) {
         }
     });
 
-
+    fs.access(dataPath + '/data/perms/pop/' + address, fs.constants.F_OK | fs.constants.W_OK, (err) => {
+        if (err) {
+            pocket.info("Perms File not found/not readable: " + address)
+            return false;
+        } else {
+            fs.readFile(dataPath + '/data/perms/pop/' + address, "utf8", function (err, data) {
+                if (err) return pocket.error(err);
+                if (data == "false") {
+                    target.webview.executeJavaScript("window.open = null").then(r => function () {
+                        pocket.info("Turning off popups")
+                    })
+                }
+            })
+        }
+    });
 
 }
 

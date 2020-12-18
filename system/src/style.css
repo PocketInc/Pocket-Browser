@@ -12,6 +12,7 @@ img {
     animation: rainbow 2s infinite;
     width: 80%;
     height: 18%;
+    -webkit-user-drag: none;
 }
 @keyframes rainbow {
     0%{
@@ -63,9 +64,13 @@ nav button:hover {
 .x {
     background-color: red;
     transition-duration: 0.4s;
+    float: right;
     color: darkslategrey;
+    text-align: center;
+    width: 4%;
+    height: 5%;
     border: 1px solid black;
-    border-radius: 25px;
+    border-radius: 5px;
 }
 .x:hover {
     background-color: darkred; /* Green */
@@ -113,3 +118,28 @@ button:hover {
     color: lightskyblue;
     background-color: darkslategrey;
 }
+.tooltip {
+    position: relative;
+    display: inline-block;
+    border-bottom: 1px dotted black;
+}
+
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 120px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    padding: 5px 0;
+    border-radius: 6px;
+    position: absolute;
+    z-index: 1;
+    top: 100%;
+    left: 50%;
+    margin-left: -60px;
+}
+
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+}
+*:focus {outline: none}

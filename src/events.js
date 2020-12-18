@@ -214,7 +214,7 @@ window.addEventListener("keypress",function (event) {
 //auto-complete compatibility
 
     const autocomplete = require("autocompleter");
-
+    let suggestions;
 
     autocomplete({
         minLength: 1,
@@ -222,7 +222,12 @@ window.addEventListener("keypress",function (event) {
         fetch: function (text, update) {
             text = text.toLowerCase();
             getHistory();
-            var suggestions = fullHistory.filter(n => n.label.toLowerCase().includes(text))
+            suggestions = fullHistory.filter(n => n.label.toLowerCase().includes(text))
+            for (let i=0;i<suggestions.length;i++) {
+                if (suggestions[i].label.length > 100) {
+                    suggestions[i].label = suggestions[i].label.slice(0,100) + "..."
+                }
+            }
             update(suggestions);
 
         },
