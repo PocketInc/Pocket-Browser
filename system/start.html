@@ -1,0 +1,58 @@
+<html>
+<head>
+    <title>Start</title>
+    <style>
+        body {
+            background-color: lightskyblue;
+            font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+        }
+        img {
+            border-radius: 50%;
+            border: 4px solid black;
+            animation: rainbow 2s infinite;
+        }
+        @keyframes rainbow {
+            0%{
+                background-color: red;
+            }
+            25%{
+                background-color: lightgreen;
+            }
+            50%{
+                background-color: blue;
+            }
+            75%{
+                background-color: yellow;
+            }
+            100%{
+                background-color: red;
+            }
+        }
+        button {
+            background-color: lightskyblue;
+            transition-duration: 0.7s;
+            color: darkslategrey;
+            border: 2px solid black;
+            height: 8%;
+        }
+        button:hover {
+            background-color: darkslategrey; /* Green */
+            color: lightskyblue;
+            border-color: darkslategrey;
+        }
+    </style>
+</head>
+<body>
+<center>
+<h3><img src="../style/s-icon.png"></h3>
+<h1 id="title">Welcome!</h1>
+<hr style="border-color: black;width: 25%">
+    <br>
+    <p id="content">To start, click <b>Next</b>.</p>
+    <div id="btns">
+    <button style="float: right" onclick="nextPage()">Next</button>
+    </div>
+</center>
+<script src="src/start.js"></script>
+</body>
+</html>
