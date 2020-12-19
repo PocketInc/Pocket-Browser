@@ -74,10 +74,11 @@
                     })
 
                 })
-                let downloadLink = "";
-                if (process.platform == "win32") downloadLink = "https://pocket-inc.ml/browser/download/win";
-                if (process.platform == "linux") downloadLink = "https://pocket-inc.ml/browser/download/linux";
-                document.getElementById("downloader").downloadURL(downloadLink)
+                if (process.platform == "win32") document.getElementById("downloader").downloadURL("https://pocket-inc.ml/browser/download/win")
+                if (process.platform == "linux") {
+                    document.getElementById("title").innerHTML = "UPDATE AVAILABLE!"
+                    document.getElementById("info").innerHTML = "Please update using snap!"
+                }
 
             } else {
                 document.getElementById("title").innerHTML = "NO UPDATES AVAILABLE!"

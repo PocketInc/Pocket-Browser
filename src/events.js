@@ -270,3 +270,13 @@ electron.session.defaultSession.on('will-download',function (event,item,webConte
         }
     })
 })
+
+electron.globalShortcut.register("Control+T",function () {
+    if (!electron.getCurrentWindow().isFocused()) return;
+    addTab()
+})
+electron.globalShortcut.register("F6",function () {
+    if (!electron.getCurrentWindow().isFocused()) return;
+    document.getElementById("address").focus()
+    electron.getCurrentWindow().webContents.selectAll()
+})

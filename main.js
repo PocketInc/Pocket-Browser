@@ -6,7 +6,7 @@
  */
 
 // Modules to control application life and create native browser window
-const {app, BrowserWindow, ipcMain,dialog, session} = require('electron')
+const {app, BrowserWindow, globalShortcut, session} = require('electron')
 const path = require('path')
 function createWindow () {
   // Create the browser window.
@@ -56,3 +56,4 @@ app.on('window-all-closed', function () {
   // to stay active until the user quits explicitly with Cmd + Q
   if (process.platform !== 'darwin') app.quit()
 })
+app.on("will-quit",function () {globalShortcut.unregisterAll()})
