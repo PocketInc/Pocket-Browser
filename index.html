@@ -46,7 +46,15 @@
             <button onclick="goForward()" class="btn btn-light noradius"><img src="./node_modules/bootstrap-icons/icons/arrow-right-short.svg" alt="" width="25" height="25" title="Forward"></button>
             <button onclick="goHome()" class="btn btn-light noradius"><img src="./node_modules/bootstrap-icons/icons/house.svg" alt="" width="25" height="25" title="Home"></button>
             <button onclick="reloadPage()" class="btn btn-light noradius" id="reload"><img src="./node_modules/bootstrap-icons/icons/bootstrap-reboot.svg" alt="" width="25" height="25" title="Reload"></button>
-
+            <div class="btn-group" id="downloads" hidden="hidden">
+                <button class="btn btn-light noradius" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <img src="node_modules/bootstrap-icons/icons/download.svg" width="25" height="25" title="Downloads">
+                </button>
+                <div class="dropdown-menu">
+                    <p class="custom-dropdown-item">Downloads:</p>
+                    <div id="downloads-list"></div>
+                </div>
+            </div>
             &nbsp;<div class="btn-group">
             <button class="btn icon" id="shieldButton" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <img id="shield" src="./node_modules/bootstrap-icons/icons/shield-check.svg" alt="" width="25" height="25" title="Secure">
@@ -90,10 +98,10 @@
                 <button class="dropdown-item" type="button" onclick="addWindow()">New Window<small>     -     Ctrl+N</small></button>
                 <button class="dropdown-item" type="button" onclick="loadDev()">Developer Tools</button>
                 <button class="dropdown-item" type="button" onclick="openSystemPage('history')">History<small>     -     Ctrl+H</small></button>
-                <button class="dropdown-item" type="button">Downloads<small>     -     Ctrl+J</small></button>
                 <button class="dropdown-item" type="button" onclick="openSystemPage('extensions')">Extentions</button>
                 <div class="custom-dropdown-item"><button class="btn custom-btn-light" type="button" onclick="findInPage()">Find</button> <b> | </b> <button class="btn custom-btn-light" onclick="zoom('add')"><img src="node_modules/bootstrap-icons/icons/zoom-in.svg" width="15" height="15" title="Zoom In"> </button> <button class="btn custom-btn-light" onclick="zoom('minus')"><img src="node_modules/bootstrap-icons/icons/zoom-out.svg" width="15" height="15" title="Zoom out"> </button> </div>
                 <button class="dropdown-item" type="button" onclick="openSystemPage('search')">Settings<small>     -     Ctrl+Alt+S</small></button>
+                <button class="dropdown-item" type="button" onclick="openSystemPage('updater')">Check for Updates</button>
                 <button class="dropdown-item" type="button" onclick="openSystemPage('about')">About</button>
                 <button class="dropdown-item" type="button" onclick="electron.app.exit()">Exit</button>
             </div>

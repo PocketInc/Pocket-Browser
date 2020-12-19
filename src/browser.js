@@ -547,3 +547,22 @@ function zoom(type) {
     }
     betaNotify("Pocket Browser","Zoom Level: " + tabGroup.getActiveTab().webview.getZoomLevel())
 }
+
+function downloadSettings(name) {
+    let buttons;
+    if (downloadItems[name].isPaused()) {
+        let action = electron.dialog.showMessageBoxSync(electron.getCurrentWindow(), {
+            message: "What action do you want to run on '" + name + "'",
+            buttons: ['Resume', 'Stop', 'Close']
+        })
+        if (action == 0) downloadItems[name].resume();
+        else if (action == 1) downloadItems[name].cancel();
+    } else {
+        let action = electron.dialog.showMessageBoxSync(electron.getCurrentWindow(), {
+            message: "What action do you want to run on '" + name + "'",
+            buttons: ['Pause', 'Stop', 'Close']
+        })
+        if (action == 0) downloadItems[name].pause();
+        else if (action == 1) downloadItems[name].cancel();
+    }
+}

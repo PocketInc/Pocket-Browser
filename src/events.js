@@ -240,3 +240,33 @@ document.getElementById("go").click();
 const emittedOnce = (element, eventName) => new Promise(resolve => {
     element.addEventListener(eventName, event => resolve(event), { once: true })
 })
+let downloads = [];
+let downloadItems = [];
+electron.session.defaultSession.on('will-download',function (event,item,webContents) {
+    if (downloads[item.getFilename()]) {
+        item.stop();
+        return;
+    }
+    document.getElementById("downloads").hidden = "";
+   document.getElementById('downloads-list').innerHTML += "<button class='custom-dropdown-item' onclick='downloadSettings(`" + item.getFilename() + "`)'><span id='di-" + downloads.length + "'>" + item.getFilename() + "</span> - <span id='d-" + downloads.length + "'>Starting..</span></button>";
+   downloads[item.getFilename()] = downloads.length;
+   downloadItems[item.getFilename()] = item;
+
+   item.on("updated",function (event,state) {
+       if (state === 'progressing') {
+           if (item.isPaused()) {
+               document.getElementById("d-" + downloads[item.getFilename()]).innerHTML = "Paused";
+           } else {
+               document.getElementById("d-" + downloads[item.getFilename()]).name = Math.floor(item.getReceivedBytes()/1000000) + " / " + Math.floor(item.getTotalBytes()/1000000);
+               document.getElementById("d-" + downloads[item.getFilename()]).innerHTML = Math.floor((100.0 * item.getReceivedBytes()) / item.getTotalBytes()) + "%";
+           }
+       }
+   })
+    item.on("done",function (event, state) {
+        if (state == "completed") {
+            downloads[item.getFilename()] = undefined;
+            downloadItems[item.getFilename()] = undefined;
+            document.getElementById(downloads[item.getFilename()]).innerHTML = "Done!"
+        }
+    })
+})
