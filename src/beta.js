@@ -8,13 +8,25 @@ $("#toast").toast("hide");
 $("#toast").on("hidden.bs.toast",function () {
     $("#toast").hide();
 })
+let toastID = 0;
+function betaNotify(title,body) {
+document.getElementById("toasts").innerHTML += "<div id='t-" + toastID + "' class=\"pbtoast toast\" role=\"alert\" aria-live=\"assertive\" aria-atomic=\"true\" data-delay=\"10000\">\n" +
+    "            <div class=\"toast-header\">\n" +
+    "                <img src=\"system/favicon.ico\" class=\"rounded mr-2\" alt=\"Pb\" width=\"25\" height=\"25\">\n" +
+    "                <strong class=\"mr-auto\">" + title + "</strong>\n" +
+    "                <small></small>\n" +
+    "                <button type=\"button\" class=\"ml-2 mb-1 close\" data-dismiss=\"toast\" aria-label=\"Close\">\n" +
+    "                    <span aria-hidden=\"true\">&times;</span>\n" +
+    "                </button>\n" +
+    "            </div>\n" +
+    "            <div class=\"toast-body bg-light\">\n" + body +
+    "\n" +
+    "            </div>\n" +
+    "        </div>"
 
-function betaNotify(title,body,hide) {
-document.getElementById("notifyTitle").innerHTML = title;
-document.getElementById("notifyBody").innerHTML = body;
-
-    $("#toast").show();
-    $("#toast").toast("show");
+    $(`#t-${toastID}`).show();
+    $(`#t-${toastID}`).toast("show");
+    toastID++;
 
 }
 function loadTheme() {

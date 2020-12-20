@@ -50,14 +50,9 @@ body {
 .icon {
     border-radius: 50%!important;
 }
-.pb-toast {
+#toasts {
     position: absolute;
     top: 0;
-    right: 0;
-}
-#toast {
-    position: absolute;
-    bottom: 0;
     right: 0;
 }
 .noradius {
