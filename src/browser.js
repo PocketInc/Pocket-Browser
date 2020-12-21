@@ -566,3 +566,14 @@ function downloadSettings(name) {
         else if (action == 1) downloadItems[name].cancel();
     }
 }
+function sendError(code) {
+    if (fs.existsSync(dataPath + "/data/errors.pocket")) {
+        console.log("exists")
+        if (fs.readFileSync(dataPath + "/data/errors.pocket",{encoding: "utf8"}) === "true") {
+            // send
+            pocket.info("Sent Error Report to Pocket Team.");
+            return fetch(encodeURI("https://pocket-inc.ml/api/browser/error.php?error=" + code + "&os=" + process.platform + "&ver=" + browserVersion));
+        }
+    }
+    pocket.info("Didn't send report to Pocket Team due to setting disabled.")
+}

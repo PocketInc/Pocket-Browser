@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Send a Feedback</title>
+    <link rel="stylesheet" href="src/style.css">
+
+</head>
+<body>
+<center>
+    <h3>Send a Feedback</h3>
+    <p id="info"></p>
+    <textarea class="input" style="height: 75vh;width: 75%" placeholder="The browser looks good, but it needs.." id="feedback"></textarea>
+    <br>
+    <button class="btn" onclick="sendFeedback()" id="btn">Send</button>
+    </center>
+<script>
+    let fs = require("fs");
+    let dataPath = require("electron").remote.app.getPath("userData");
+    let fetch = require("node-fetch");
+    async function sendFeedback() {
+        let feedback = document.getElementById("feedback").value;
+        let os = process.platform;
+        let ver = require("../package.json").version;
+        let {URLSearchParams} = require("url");
+        const params = new URLSearchParams();
+        params.append('desc', feedback);
+        params.append('os',os)
+        params.append('ver',ver)
+
+        await fetch("https://pocket-inc.ml/api/browser/feedback.php",{
+            method: "POST",
+            body: params
+        });
+        document.getElementById("feedback").disabled = "disabled"
+        document.getElementById("info").innerHTML = "Sent!"
+        document.getElementById("btn").onclick = "";
+    }
+</script>
+</body>
+</html>

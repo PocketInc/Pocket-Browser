@@ -103,6 +103,7 @@ function addEventsToTab(targetTab) {
         if (event.errorCode == -21 || event.errorCode == -106) loadSystemPage("connection")
         if (event.errorCode == -113) loadSystemPage("insecure")
         if (event.errorCode == -6) loadSystemPage("file")
+        sendError(event.errorCode)
     })
 targetTab.webview.addEventListener("found-in-page",function (event) {
 document.getElementById("findResults").innerHTML = event.result.matches;
