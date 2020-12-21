@@ -6,7 +6,7 @@
 -->
 <script>
     // simple browser version variable.
-    var browserVersion = "1.5.0";
+    var browserVersion = "1.6.0";
     var darkMode = false;
     var webDark = false;
 </script>
@@ -46,6 +46,15 @@
             <button onclick="goForward()" class="btn btn-light noradius"><img src="./node_modules/bootstrap-icons/icons/arrow-right-short.svg" alt="" width="25" height="25" title="Forward"></button>
             <button onclick="goHome()" class="btn btn-light noradius"><img src="./node_modules/bootstrap-icons/icons/house.svg" alt="" width="25" height="25" title="Home"></button>
             <button onclick="reloadPage()" class="btn btn-light noradius" id="reload"><img src="./node_modules/bootstrap-icons/icons/bootstrap-reboot.svg" alt="" width="25" height="25" title="Reload"></button>
+            <div class="btn-group" id="bookmakrsBtn">
+                <button class="btn btn-light noradius" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <img src="node_modules/bootstrap-icons/icons/bookmarks.svg" width="25" height="25" title="Extensions">
+                </button>
+                <div class="dropdown-menu">
+                    <p class="custom-dropdown-item">Bookmarks:</p>
+                    <div id="bookmarked"></div>
+                </div>
+            </div>
             <div class="btn-group" id="downloads" hidden="hidden">
                 <button class="btn btn-light noradius" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <img src="node_modules/bootstrap-icons/icons/download.svg" width="25" height="25" title="Downloads">

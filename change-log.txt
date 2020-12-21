@@ -3,6 +3,10 @@ v1.6:
 - Added Sync.
 - Rebuilt the design.
 - Added few keyboard and mouse shortcuts.
+- Added Error Reporting.
+- Added Startup Window.
+- Improved Notifications System.
+And More can be found on GitHub.
 
 V1.5:
 - Added Ad Blocker.

@@ -2,12 +2,6 @@
  * © 2020 - Pocket Inc.
  */
 
-$("#toast").hide();
-$("#toast").toast("hide");
-
-$("#toast").on("hidden.bs.toast",function () {
-    $("#toast").hide();
-})
 let toastID = 0;
 function betaNotify(title,body) {
 document.getElementById("toasts").innerHTML += "<div id='t-" + toastID + "' class=\"pbtoast toast\" role=\"alert\" aria-live=\"assertive\" aria-atomic=\"true\" data-delay=\"10000\">\n" +
@@ -20,9 +14,9 @@ document.getElementById("toasts").innerHTML += "<div id='t-" + toastID + "' clas
     "                </button>\n" +
     "            </div>\n" +
     "            <div class=\"toast-body bg-light\">\n" + body +
-    "\n" +
     "            </div>\n" +
     "        </div>"
+
 
     $(`#t-${toastID}`).show();
     $(`#t-${toastID}`).toast("show");
