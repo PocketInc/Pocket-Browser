@@ -90,7 +90,8 @@ function addEventsToTab(targetTab) {
     })
     // when page starts loading run change state function.
     targetTab.webview.addEventListener('did-start-loading', function(){
-        if (onlineState == false) betaNotify("Internet Problem!","You don't have internet connection!")
+        notifier.options.labels.alert = "Internet Problem!"
+        if (onlineState == false) notifier.alert("Check your internet connection!")
         changeState(targetTab);
     });
     // when page title is updated, then run change title function.
@@ -99,7 +100,8 @@ function addEventsToTab(targetTab) {
     })
     targetTab.webview.addEventListener('did-fail-load',function (event) {
         if (event.errorCode == -3) return;
-        betaNotify("Error: " + event.errorCode,event.errorDescription)
+        notifier.options.labels.alert = "Error: " + event.errorCode
+        notifier.alert(event.errorDescription)
         if (event.errorCode == -21 || event.errorCode == -106) loadSystemPage("connection")
         if (event.errorCode == -113) loadSystemPage("insecure")
         if (event.errorCode == -6) loadSystemPage("file")

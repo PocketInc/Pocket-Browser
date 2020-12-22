@@ -6,6 +6,7 @@
   "main": "main.js",
   "dependencies": {
     "autocompleter": "^6.0.3",
+    "awesome-notifications": "^3.1.1",
     "bootstrap-icons": "^1.0.0-alpha5",
     "dragula": "^3.7.2",
     "electron": "^9.0.5",

@@ -6,7 +6,7 @@
 -->
 <script>
     // simple browser version variable.
-    var browserVersion = "1.6.0";
+    var browserVersion = "1.4.0";
     var darkMode = false;
     var webDark = false;
 </script>
@@ -26,12 +26,20 @@
          //adding jquery in node app.
          window.jQuery = window.$ = require('./external/jquery.js');
  </script>
+        <!-- Bootstrap & Popper -->
  <script src="external/popper.js"></script>
  <script src="external/bootstrap.js"></script>
  <link rel="stylesheet" href="external/bootstrap.css">
+        <!-- AutoComplete -->
 <link rel="stylesheet" href="external/autocomplete.css">
+        <!-- Drag Tabs - Drogula -->
         <link rel="stylesheet" href="node_modules/dragula/dist/dragula.css">
-
+        <!-- Notifications - awesome-notifications -->
+        <link rel="stylesheet" href="node_modules/awesome-notifications/dist/style.css">
+        <script src="node_modules/awesome-notifications/dist/index.var.js"></script>
+        <script>
+            let notifier = new AWN();
+        </script>
         <title>Pocket Browser</title>
     </head>
     <body>
@@ -110,7 +118,6 @@
                 <button class="dropdown-item" type="button" onclick="openSystemPage('extensions')">Extentions</button>
                 <div class="custom-dropdown-item"><button class="btn custom-btn-light" type="button" onclick="findInPage()">Find</button> <b> | </b> <button class="btn custom-btn-light" onclick="zoom('add')"><img src="node_modules/bootstrap-icons/icons/zoom-in.svg" width="15" height="15" title="Zoom In"> </button> <button class="btn custom-btn-light" onclick="zoom('minus')"><img src="node_modules/bootstrap-icons/icons/zoom-out.svg" width="15" height="15" title="Zoom out"> </button> </div>
                 <button class="dropdown-item" type="button" onclick="openSystemPage('search')">Settings<small>     -     Ctrl+Alt+S</small></button>
-                <button class="dropdown-item" type="button" onclick="openSystemPage('updater')">Check for Updates</button>
                 <button class="dropdown-item" type="button" onclick="openSystemPage('feedback')">Feedback</button>
                 <button class="dropdown-item" type="button" onclick="openSystemPage('about')">About</button>
                 <button class="dropdown-item" type="button" onclick="electron.app.exit()">Exit</button>
@@ -160,12 +167,6 @@ goHome();
     addEventsToTab(mainTab)
 </script>
 
-
-
-        <div aria-live="polite" aria-atomic="true" class="position-relative">
-            <div class="toast-container p-3" id="toasts">
-            </div>
-            </div>
         <div class="alert alert-light" role="alert" id="link" hidden="hidden">
 
               </div>
@@ -175,7 +176,8 @@ goHome();
 <div id="extensions"></div>
     <script>
         if (parseFloat(browserVersion) < parseFloat(latestVersion)) {
-            betaNotify("Update Available!","<button class='btn btn-info btn-sm' onclick='openSystemPage(`updater`)'>Update</button>")
+            notifier.options.labels.info = "Update!";
+            notifier.info("New version is out now!<br><button class='btn btn-info btn-sm' onclick='openSystemPage(`updater`)'>Update</button>")
         }
         //load start page if first load
         if (!fs.existsSync(dataPath + "/data/errors.pocket")) openSystemPage("start")
